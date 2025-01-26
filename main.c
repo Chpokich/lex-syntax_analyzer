@@ -13,8 +13,6 @@
   [state_initial][s_brace_opening] = state_open_brace, 
   [state_initial][s_brace_closing] = state_close_brace,
 
-  //[state_next_line][s_end_string] = state_end_string,
-
   [state_initial][s_zero] = state_digit,
   [state_initial][s_one] = state_digit,
   [state_initial][s_two] = state_digit,
@@ -102,7 +100,6 @@
   [state_digit_dot_digit][s_open_parenthesis] = state_open_parenthesis,
   [state_digit_dot_digit][s_brace_closing] = state_close_brace,
   [state_digit_dot_digit][s_space] = state_final,
-  //[state_digit_dot_digit][s_next_line] = state_next_line,
   [state_digit][s_space] = state_final, 
 
   [state_initial][sd] = state_d, 
@@ -117,7 +114,6 @@
   [state_open_brace][s_brace_closing] = state_close_brace,
 
   [state_do][s_space] = state_final,
- // [state_do][s_brace_opening] = state_final,
 
   [state_initial][sw] = state_w, 
   [state_w][sh] = state_wh, 
@@ -225,25 +221,12 @@ void get_token()
       if(current == state_final)
         current = state_initial;
 
-      //Вывод в консоль номер строки и токен
-     // printf("row = %-5d\t token = %-10s\n",row_counter, str);
-
-      //Вывод номера строки и токена в другой файл
-      /*write_to_output_file(&row_counter, str, 
-      &file_is_open_before, &row_counter_prev_state);*/
-
       memset(str, 0, sizeof(str));
       file_is_open_before = 1; 
       i = 0; 
     }
-    
-    //Если текущее состояние равно начальносу, 
-    //то строка хранящая токен очищается
-   /* if(current == state_initial){
-      i = 0; 
-    }*/
 
-    if(ch == '\n')
+       if(ch == '\n')
       row_counter++; 
 
     if((current != state_do) && (current != state_while) &&
@@ -253,8 +236,7 @@ void get_token()
       memset(str, 0, sizeof(str));
       str[i] = ch;
     }
-    /*printf("Current state = %d\n",  
-        current);  */
+
     if(current != state_final)
       previous = current;
 
@@ -271,13 +253,10 @@ void get_token()
 int main()
 {
   get_token();
-  int a = 5;
-  int* i = &a;
   
   puts("\n\n");
   get_output_data(state_arr);
   puts("\n\n");
- //enum state* state_arr_p = state_arr;
  syntax_analysis(state_arr); 
   return 0;
 }

@@ -68,10 +68,6 @@
 
 extern enum states table[100][250];
 
-void write_to_output_file(); 
-
-void get_token(); 
-
 void syntax_analysis(enum states *state_arr_p);
 
 #endif // HEADER_H
